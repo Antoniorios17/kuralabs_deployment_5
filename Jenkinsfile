@@ -47,10 +47,11 @@ pipeline {
         withCredentials([string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'), 
                         string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key'),
                         string(credentialsId: 'DOCKER_PWD', variable: 'docker_pwd')]) {
-                            dir('docker') {
-                              sh 'docker-push.sh'
-                              
-                            }
+                              sh '''#!/bin/bash
+                              sudo docker tag pythonapp:latest antoniorios17/pythonapp:latest
+                              sudo docker push antoniorios17/pythonapp:latest
+                              '''
+                            
          }
     }
    }

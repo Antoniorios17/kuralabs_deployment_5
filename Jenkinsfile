@@ -51,6 +51,17 @@ pipeline {
          
     }
    }
+     stage('Init') {
+       agent{label 'terraform-agent'}
+       steps {
+        withCredentials([string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'), 
+                        string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')]) {
+                            dir('intTerraform') {
+                              sh 'terraform init' 
+                            }
+         }
+    }
+   }  
      stage('Plan') {
        agent{label 'terraform-agent'}
        steps {
@@ -61,8 +72,7 @@ pipeline {
                             }
          }
     }
-   }  
-     
+   }
      
      
    }

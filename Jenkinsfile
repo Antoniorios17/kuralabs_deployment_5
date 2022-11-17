@@ -48,7 +48,7 @@ pipeline {
                         string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key'),
                         string(credentialsId: 'DOCKER_PWD', variable: 'docker_pwd')]) {
                             dir('docker') {
-                              sh 'sudo docker build -t pythonapp .' 
+                              sh 'docker-push.sh' 
                             }
          }
     }

@@ -43,16 +43,12 @@ pipeline {
      
      stage('Push to DockerHub') {
        agent{label 'docker-agent'}
-       steps {
-        withCredentials([string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'), 
-                        string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key'),
-                        string(credentialsId: 'DOCKER_PWD', variable: 'docker_pwd')]) {
-                              sh '''#!/bin/bash
-                              sudo docker tag pythonapp:latest antoniorios17/pythonapp:latest
-                              sudo docker push antoniorios17/pythonapp:latest
-                              '''
-                            
-         }
+       steps {        
+          sh '''#!/bin/bash
+          sudo docker tag pythonapp:latest antoniorios17/pythonapp:latest
+          sudo docker push antoniorios17/pythonapp:latest
+          '''                      
+         
     }
    }
      

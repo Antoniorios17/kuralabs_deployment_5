@@ -73,7 +73,7 @@ pipeline {
          }
     }
    }
-     stage('Apply') {
+     stage('Apply-Deploy to ECS') {
        agent{label 'terraform-agent'}
        steps {
         withCredentials([string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'), 

@@ -29,7 +29,7 @@ pipeline {
       }
     }
      
-     stage('CreateContainer') {
+     stage('Create Container') {
        agent{label 'docker-agent'}
        steps {
         withCredentials([string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'), 
@@ -40,6 +40,21 @@ pipeline {
          }
     }
    }
+     
+     stage('Push to DockerHub') {
+       agent{label 'docker-agent'}
+       steps {
+        withCredentials([string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'), 
+                        string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key'),
+                        string(credentialsId: 'DOCKER_PWD', variable: 'docker_pwd')]) {
+                            dir('docker') {
+                              sh 'sudo docker build -t pythonapp .' 
+                            }
+         }
+    }
+   }
+     
+     
      
      
    }

@@ -9,8 +9,9 @@
 4. Set up terraform on EC2-3
 5. Set up jenkins agents for docker and terraform
 6. Create a pipeline build on Jenkins
-7. Additions
-8. Diagram
+7. Build a Jenkinsfile
+8. Additions
+9. Diagram
 
 
 ## 1. Create 3 EC2s on the default VPC
@@ -35,7 +36,7 @@
   * python3.10-venv
   * nginx
 * Alternative:
-  * To facilitate the set up process for jenkins I use [this](https://github.com/Antoniorios17/kuralabs_deployment_5/blob/main/Jenkins-set-up-script.sh) script.
+  * To facilitate the set up process for jenkins I use [this script](https://github.com/Antoniorios17/kuralabs_deployment_5/blob/main/Jenkins-set-up-script.sh)
 
 ## 3. Set up docker on EC2-2
 
@@ -105,68 +106,56 @@
 
 ## 6. Create a pipeline build on Jenkins
 
+* Create a new multibranch pipeline
+* Add source: github
+* Create a new access token on github for this deployment
+* Add github credentials and use the token for password
+* Validate the credential by adding the repository
+* Apply and save the configuration
 
 
+## 7. Build a Jenkinsfile
+* The Jenkinsfile creates all the stages of production:
+* The following stages run on the jenkins server:
+  * Build
+    * The application will be created in a virtual environment.
+  * Test
+    * The application will run unit tests to make sure it's working as expected. 
+* Stages performed by the Jenkins agent set up on the EC2-2(Docker)
+  * Create Container
+    * The dockerfile will be copied from the repository to create an image of the flask application
+  * Push to DockerHub
+    * The image will be push to dockerHub to later be used in terraform
+    * 
+``` diff
+-Troubleshooting: I had many problems trying to work push my image to dockehub running the commands as part of the stages.
+the solution was to login to docker manually on the docker machine before hand and that way the credentials would be saved on the computer.
 
-
-
-
-
-
-
-
-
-
-
-
+It is not very efficient but it fixed the issue and continued with the next stages.
+```
+* Stages to be performed by the Jenkins agent on the EC2-3(Terraform)
+  * Init
+    * This stage will initialize terraform
+  * Plan
+    * This stage will plan and make sure that the terraform files are working as expected without erros
+    * Details will be presented of the work performed by terraform if it was to be applied.
+  * Apply-Deploy to ECS
+    * This stage will deploy the terraform files and configurations
+    * The insfrastructure will be created
+      * The VPC will have the following configurations
+      * 2 availability zones
+      * 2 subnets, a private and public
+      * internet gateway
+      * load balancer
+      * routing tables
+    * ECS will use the image from dockerhub
+      * The application will be deployed in the private subnet
+      * The traffic will be managed by the load balancer 
+  * Destroy
+    * This stage is not necessary as part of the production environment.
+    * The only purpose of this stage is to take down the infrastructure to avoid charges from amazon.
 
 ## 7. Additions
-## 8. Diagram
-
-
-
-
-
-## Install Jenkins on an EC2
-The EC2 doesn't need to be part of the vpc, we are trying to connect the jenkins server from outside the VPC with an agent
-* Connect to the repository on github using personal token
-* Test to verify authentication is successful
-
-
-
-This is the preparation of the EC2 to work with the Jenkins agent coming from the main server.
-
-## Configure the Jenkins agent on the VPC
-Keep in mind that you are working on these steps on the main server outside the VPC.
-
-* From the jenkins dashboard select the option for "Build Executor Status"
-* To create a new agent "New Node" and permanent agent
-* Configure the name and description as necessary
-* To connect to the EC2 inside the VPC launch the agent via SSH:
-  * Add the public IP of the EC2
-  * Add the RSA key and user to access the computer using SSH.
-* Keep the availability of the agent at all times.
-* Save all the configurations
-
-``` diff
--Troubleshooting: When working with the agent and free EC2s, it is expected that the public IP will change once the computer is turned off.
--You will need to update the public IP and set up the access for ssh to continue to work normally.
-```
-Once the problems are resolved you can relaunch the agent with the updated IP.
-
-## Create a pipeline build on Jenkins
-* Steps to take before startint the build
-  * Access the EC2 inside the VPC using ssh or connect through aws console.
-
--Troubleshooting
--I initially encounter errors with working with the documentations and I was not able to run the application successfully and I had an error in the Jenkinsfile
--The documentation was updated for the jenkinsfile and the working and updated file is in the repository
-```
-* After all the configurations are correct you can create a new build
-
-![deploy](https://github.com/Antoniorios17/kuralabs_deployment_3/blob/main/images/deploy.PNG)
-
-If everything is successfull you will see all stages of the build on color green.
 
 # Additions
 ## Webhook
@@ -190,14 +179,11 @@ If everything is successfull you will see all stages of the build on color green
 
 ![UI-after](https://github.com/Antoniorios17/kuralabs_deployment_3/blob/main/images/UI-after.PNG)
 
+## 8. Diagram
 
-# Diagram
 
-![diagram](https://github.com/Antoniorios17/kuralabs_deployment_3/blob/main/images/diagram.PNG)
 
-# Stack
 
-![stack](https://github.com/Antoniorios17/kuralabs_deployment_3/blob/main/images/STACK.PNG)
 
 
 

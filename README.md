@@ -128,8 +128,10 @@
     * The image will be push to dockerHub to later be used in terraform
     
 ``` diff
--Troubleshooting: I had many problems trying to work push my image to dockehub running the commands as part of the stages.
-the solution was to login to docker manually on the docker machine before hand and that way the credentials would be saved on the computer.
+-Troubleshooting: I had many problems trying to work push my image to dockerhub
+running the commands as part of the stages.The solution was to login to docker 
+manually on the docker machine before hand and that way the credentials would 
+be saved on the computer.
 
 It is not very efficient but it fixed the issue and continued with the next stages.
 ```

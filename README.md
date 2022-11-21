@@ -1,5 +1,5 @@
 <h1 align=center>Deployment 3</h1>
-<div align=center>Set up a Jenkins CI/CD pipeline with agents for docker and terraform and deploy a infrastructure as well as a containerized application</div>
+<div align=center>Set up a Jenkins CI/CD pipeline with agents for docker and terraform and deploy a infrastructure as well as a containerized application.</div>
 
 # Table of contents
 
@@ -35,9 +35,40 @@
 * Alternative:
   * To facilitate the set up process for jenkins I use [this](https://github.com/Antoniorios17/kuralabs_deployment_5/blob/main/Jenkins-set-up-script.sh) script.
 
-
 ## 3. Set up docker on EC2-2
+ * to install docker follow this instructions
+   * update the apt package index and install packages for allowing the use of other repositories over HTTPS
+
+      ```
+      $sudo apt-get update
+      $sudo apt-get install \
+          ca-certificates \
+          curl \
+          gnupg \
+          lsb-release
+      ```
+   * Add docker's oficial key:
+      ```
+      $ sudo mkdir -p /etc/apt/keyrings
+      $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+      ```
+   * Set up the repository
+     ```
+     $echo \
+     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+     $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null 
+     ```
+   * Update the package index
+     ```
+     $ sudo apt-get update
+     ```
+   * Install the latest version of docker
+     ```
+     $ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+     ```
+   * You can use docker now
 ## 4. Set up terraform on EC2-3
+*
 ## 5. Set up jenkins agents for docker and terraform
 ## 6. Create a pipeline build on Jenkins
 ## 7. Additions

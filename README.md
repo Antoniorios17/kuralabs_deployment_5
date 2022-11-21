@@ -14,6 +14,7 @@
 
 
 ## 1. Create 3 EC2s on the default VPC
+
 * Log in to AWS and provision 3 EC2 instances.
 * The EC2s will be allocated for Jenkins, Docker and Terraform.
 * The computers will be running Ubunut linux
@@ -24,6 +25,7 @@
   * The terraform machine will only require 22 for ssh.
 
 ## 2. Set up a jenkins server on EC2-1
+
 * Select an ubuntu image and most default settings
 * Open ports are 22, 80 and 8080
 * Once ubuntu is set up and updated
@@ -36,7 +38,8 @@
   * To facilitate the set up process for jenkins I use [this](https://github.com/Antoniorios17/kuralabs_deployment_5/blob/main/Jenkins-set-up-script.sh) script.
 
 ## 3. Set up docker on EC2-2
- * to install docker follow this instructions
+
+* to install docker follow this instructions
    * update the apt package index and install packages for allowing the use of other repositories over HTTPS
 
       ```
@@ -68,22 +71,55 @@
      ```
    * You can use docker now
 ## 4. Set up terraform on EC2-3
-* To set up terraform run the following commands:
-* Install the terraform's official key
 
-``` 
-      $ wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
-```
-* Set up the repository
-```
-      $ echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-```
-* Update the package index
-```
-      $ sudo apt update && sudo apt install terraform
-```
+* To set up terraform run the following commands:
+  * Install the terraform's official key
+
+    ``` 
+     $ wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+    ```
+  * Set up the repository
+  
+    ```
+     $ echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+     https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+    ```
+        
+  * Update the package index
+
+    ``` 
+     $ sudo apt update && sudo apt install terraform
+    ```
+        
 ## 5. Set up jenkins agents for docker and terraform
+
+* Install the proper libraries for Jenkins to work
+  * Jenkins run on java and will need default-jre
+* Make sure to copy the public IP addresses of both EC2s
+* The IP will be used by Jenkins to remote on the EC2s
+* Once remote access is set up Jenkins will install the agents
+* For a more detailed guide on how to set up the agents [click here](https://github.com/Antoniorios17/kuralabs_deployment_3#configure-the-jenkins-agent-on-the-vpc)
+* For setting up the credentials to work with jenkins and AWS [click here](https://github.com/Antoniorios17/kuralabs_deployment_4/edit/main/README.md#configure-credentials-on-jenkins)
+
+
+
 ## 6. Create a pipeline build on Jenkins
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 7. Additions
 ## 8. Diagram
 
@@ -96,15 +132,7 @@ The EC2 doesn't need to be part of the vpc, we are trying to connect the jenkins
 * Connect to the repository on github using personal token
 * Test to verify authentication is successful
 
-## Create an EC2 in your public subnet of your VPC
-* Select an ubuntu image and most default settings
-* Open ports are 22 and 5000
-* Once ubuntu is set up and updated
-* Install the following libraries:
-  * default-jre
-  * python3-pip
-  * python3.10-venv
-  * nginx
+
 
 This is the preparation of the EC2 to work with the Jenkins agent coming from the main server.
 
@@ -120,10 +148,6 @@ Keep in mind that you are working on these steps on the main server outside the 
 * Keep the availability of the agent at all times.
 * Save all the configurations
 
-In the case of the agent disconnecting or if you happen to change the IP address follow the troubleshooting instructions
-
-![offline](https://github.com/Antoniorios17/kuralabs_deployment_3/blob/main/images/agent_offline.PNG)
-![offline](https://github.com/Antoniorios17/kuralabs_deployment_3/blob/main/images/agent_not_connected.PNG)
 ``` diff
 -Troubleshooting: When working with the agent and free EC2s, it is expected that the public IP will change once the computer is turned off.
 -You will need to update the public IP and set up the access for ssh to continue to work normally.
@@ -133,25 +157,7 @@ Once the problems are resolved you can relaunch the agent with the updated IP.
 ## Create a pipeline build on Jenkins
 * Steps to take before startint the build
   * Access the EC2 inside the VPC using ssh or connect through aws console.
-  * Modify the default file in nginx
-  ```
-  /etc/nginx/sites-enabled/default
-  ```
-  * Update the listening ports:
-  ```
-  server {
-           listen 5000 default_server;
-           listen [::]:5000 default_server;
-  ```
-  * Update the location settings:
-    ```
-    location / {
-             proxy_pass http://127.0.0.1:8000;
-             proxy_set_header Host $host;
-             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
-    ```
-``` diff
+
 -Troubleshooting
 -I initially encounter errors with working with the documentations and I was not able to run the application successfully and I had an error in the Jenkinsfile
 -The documentation was updated for the jenkinsfile and the working and updated file is in the repository

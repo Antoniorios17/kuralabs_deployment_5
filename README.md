@@ -68,7 +68,20 @@
      ```
    * You can use docker now
 ## 4. Set up terraform on EC2-3
-*
+* To set up terraform run the following commands:
+* Install the terraform's official key
+
+``` 
+      $ wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+```
+* Set up the repository
+```
+      $ echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+```
+* Update the package index
+```
+      $ sudo apt update && sudo apt install terraform
+```
 ## 5. Set up jenkins agents for docker and terraform
 ## 6. Create a pipeline build on Jenkins
 ## 7. Additions

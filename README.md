@@ -1,28 +1,25 @@
-<img src="https://github.com/kura-labs-org/kuralabs_deployment_1/blob/main/Kuralogo.png">
-<h1 align="center">kuralabs_deployment_5<h1> 
-  
-Demonstrate your ability to deploy a containerized application.
-
-## Deployment Document Link:
-- Link to instructions: https://github.com/kura-labs-org/kuralabs_deployment_5/blob/main/Deployment-5_Assignment.pdf
-
-
-
-
-
-
 <h1 align=center>Deployment 3</h1>
-<div align=center>Deploy a flask application through a jenkins agent on a VPC</div>
+<div align=center>Set up a Jenkins CI/CD pipeline with agents for docker and terraform and deploy a infrastructure as well as a containerized application</div>
 
 # Table of contents
 
 1. Set up and configure VPC
-2. Install Jenkins on an EC2
+2. Install Jenkins on an EC2-1
 3. Create an EC2 on the public subnet of your VPC
 4. Configure the Jenkins agent on the VPC
 5. Create a pipeline build on Jenkins
 6. Additions
 7. Diagram
+
+1. Create 3 EC2s on the default VPC
+2. Set up a jenkins server on EC2-1
+3. Set up docker on EC2-2
+4. Set up terraform on EC2-3
+
+          
+
+
+
 
 ## Set up and configure VPC
 * Create a VPC on AWS

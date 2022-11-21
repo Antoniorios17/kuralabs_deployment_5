@@ -1,4 +1,4 @@
-<h1 align=center>Deployment 3</h1>
+<h1 align=center>Deployment 5</h1>
 <div align=center>Set up a Jenkins CI/CD pipeline with agents for docker and terraform and deploy a infrastructure as well as a containerized application.</div>
 
 # Table of contents
@@ -180,7 +180,7 @@ It is not very efficient but it fixed the issue and continued with the next stag
 ![UI-after](https://github.com/Antoniorios17/kuralabs_deployment_3/blob/main/images/UI-after.PNG)
 
 ## 8. Diagram
-
+![Diagram](https://github.com/Antoniorios17/kuralabs_deployment_5/blob/main/Pictures/deployment5-diagram.png)
 
 
 

@@ -183,7 +183,12 @@ It is not very efficient but it fixed the issue and continued with the next stag
 ## 8. Diagram
 ![Diagram](https://github.com/Antoniorios17/kuralabs_deployment_5/blob/main/Pictures/deployment5-diagram.png)
 
+## Improvements
 
+* To increase the speed in which the project can be complete would be to implement more scripting into the steps for setting up the EC2s.
+* The scripts would be more efficient being use during the creation of the virtual machines using user data.
+* In a different scenario the jenkins would be more secure if it was located within a private subnet of a private VPC
+* Another way to improve the application would be adding notifications systems like cloudwatch or datadog for better monitoring.
 
 
 

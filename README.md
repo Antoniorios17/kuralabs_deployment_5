@@ -157,7 +157,6 @@ It is not very efficient but it fixed the issue and continued with the next stag
 
 ## 7. Additions
 
-# Additions
 ## Webhook
 * To make the current configuration more automated you can connect jenkins to the github repository:
   * Log in to github and access the repository online

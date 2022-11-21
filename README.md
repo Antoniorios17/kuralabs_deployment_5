@@ -126,7 +126,7 @@
     * The dockerfile will be copied from the repository to create an image of the flask application
   * Push to DockerHub
     * The image will be push to dockerHub to later be used in terraform
-    * 
+    
 ``` diff
 -Troubleshooting: I had many problems trying to work push my image to dockehub running the commands as part of the stages.
 the solution was to login to docker manually on the docker machine before hand and that way the credentials would be saved on the computer.

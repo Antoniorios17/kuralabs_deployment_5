@@ -16,17 +16,26 @@
 ## 1. Create 3 EC2s on the default VPC
 * Log in to AWS and provision 3 EC2 instances.
 * The EC2s will be allocated for Jenkins, Docker and Terraform.
-* The computers will 
-* 
+* The computers will be running Ubunut linux
+* Most settings can be left on default
+* Security groups
+  * The Jenkins server will needs the ports 22, 80 and 8080.
+  * The docker EC2 will only require 22 for ssh.
+  * The terraform machine will only require 22 for ssh.
+
 ## 2. Set up a jenkins server on EC2-1
 * Select an ubuntu image and most default settings
-* Open ports are 22 and 5000
+* Open ports are 22, 80 and 8080
 * Once ubuntu is set up and updated
-Install the following libraries:
-default-jre
-python3-pip
-python3.10-venv
-nginx
+* Install the following libraries:
+  * default-jre
+  * python3-pip
+  * python3.10-venv
+  * nginx
+* Alternative:
+  * To facilitate the set up process for jenkins I use [this](https://github.com/Antoniorios17/kuralabs_deployment_5/blob/main/Jenkins-set-up-script.sh) script.
+
+
 ## 3. Set up docker on EC2-2
 ## 4. Set up terraform on EC2-3
 ## 5. Set up jenkins agents for docker and terraform

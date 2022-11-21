@@ -3,31 +3,40 @@
 
 # Table of contents
 
-1. Set up and configure VPC
-2. Install Jenkins on an EC2-1
-3. Create an EC2 on the public subnet of your VPC
-4. Configure the Jenkins agent on the VPC
-5. Create a pipeline build on Jenkins
-6. Additions
-7. Diagram
-
 1. Create 3 EC2s on the default VPC
 2. Set up a jenkins server on EC2-1
 3. Set up docker on EC2-2
 4. Set up terraform on EC2-3
+5. Set up jenkins agents for docker and terraform
+6. Create a pipeline build on Jenkins
+7. Additions
+8. Diagram
 
-          
+
+## 1. Create 3 EC2s on the default VPC
+* Log in to AWS and provision 3 EC2 instances.
+* The EC2s will be allocated for Jenkins, Docker and Terraform.
+* The computers will 
+* 
+## 2. Set up a jenkins server on EC2-1
+* Select an ubuntu image and most default settings
+* Open ports are 22 and 5000
+* Once ubuntu is set up and updated
+Install the following libraries:
+default-jre
+python3-pip
+python3.10-venv
+nginx
+## 3. Set up docker on EC2-2
+## 4. Set up terraform on EC2-3
+## 5. Set up jenkins agents for docker and terraform
+## 6. Create a pipeline build on Jenkins
+## 7. Additions
+## 8. Diagram
 
 
 
 
-## Set up and configure VPC
-* Create a VPC on AWS
-* Create 2 subnets a private and a public subnet 
-* Configure the internet gateway
-* Configure the routing tables
-
-![tables](https://github.com/Antoniorios17/kuralabs_deployment_3/blob/main/images/routing%20tables.PNG)
 
 ## Install Jenkins on an EC2
 The EC2 doesn't need to be part of the vpc, we are trying to connect the jenkins server from outside the VPC with an agent
